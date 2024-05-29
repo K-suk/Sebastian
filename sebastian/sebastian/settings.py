@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'accounts',
+    'customers',
+    'jobs',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 LOGIN_REDIRECT_URL = "accounts:index"
 LOGOUT_REDIRECT_URL = "accounts:login"
+
+# qmkm flor gzec adzr
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kuma.kou.0201@gmail.com'
+EMAIL_HOST_PASSWORD = 'qmkm flor gzec adzr'
+EMAIL_USE_TLS = True
