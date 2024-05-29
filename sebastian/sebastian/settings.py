@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(DEBUG=(bool,True))
+env.read_env(os.path.join(BASE_DIR,'.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -133,5 +137,5 @@ LOGOUT_REDIRECT_URL = "accounts:login"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'kuma.kou.0201@gmail.com'
-EMAIL_HOST_PASSWORD = 'qmkm flor gzec adzr'
+EMAIL_HOST_PASSWORD = env.get_value('EMAIL_HOST_PASSWORD',str)
 EMAIL_USE_TLS = True
