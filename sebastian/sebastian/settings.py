@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'customers',
     'jobs',
+    'salary_reports',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "sebastian.wsgi.application"
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

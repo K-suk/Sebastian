@@ -1,21 +1,40 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-    <div class="h1">Login</div>
-{% endblock %}
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {% for field in form %}
-            {{ field.label }}
-            {{ field }}
-            {{ field.errors }}
-            <br>
-        {% endfor %}
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a href="{% url 'accounts:index' %}" class="btn btn-secondary">Back</a>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                class="img-fluid" alt="Phone image">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <h1 class="mb-5">Login</h1>
+                <form method="post" class="signin-form">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <!-- Email input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="number" placeholder="Account id" id="form1Example13" class="form-control form-control-lg" name="username" value="{{ form.username.value }}">
+                        {{ form.username.errors }}
+                    </div>
+
+                    <!-- Password input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="password" placeholder="password" id="form1Example23" class="form-control form-control-lg" name="password">
+                        {{ form.password.errors }}
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center mb-4">
+                        <a href="{% url 'accounts:password_reset' %}" class="nav-link">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
+</section>
 {% endblock %}

@@ -38,7 +38,6 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-
     account_id = models.CharField(
         verbose_name=_("account_id"),
         unique=True,
@@ -74,6 +73,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     shift_count = models.IntegerField(
         verbose_name=_("shift_count"),
+        default=0,
+        null=False,
+        blank=False
+    )
+    worker_credit = models.IntegerField(
+        verbose_name=_("worker_credit"),
         default=0,
         null=False,
         blank=False

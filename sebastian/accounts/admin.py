@@ -9,14 +9,14 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff', 'is_active')
     fieldsets = (
         (None, {'fields': ('account_id', 'email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'tel', 'contact_address', 'shift_count', 'ready')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'tel', 'contact_address', 'shift_count', 'worker_credit', 'ready')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),  # 'created_at' を除外
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('account_id', 'email', 'first_name', 'last_name', 'tel', 'contact_address', 'shift_count', 'ready', 'password1', 'password2'),
+            'fields': ('account_id', 'email', 'first_name', 'last_name', 'tel', 'contact_address', 'shift_count', 'worker_credit', 'ready', 'password1', 'password2'),
         }),
     )
     readonly_fields = ('created_at', 'updated_at')  # これを追加

@@ -11,7 +11,10 @@
 {% block content %}
     {% if user.is_authenticated %}
         <div class="h2">Welcome {{ user.first_name }} {{ user.last_name }}</div>
-        <a href="{% url 'accounts:logout' %}" class="btn btn-primary">Logout</a> 
+        <a href="{% url 'accounts:logout' %}" class="btn btn-primary">Logout</a>
+        <a href="{% url 'accounts:profile' %}" class="btn btn-primary">Profile</a>
+        <a href="{% url 'jobs:job_list' %}" class="btn btn-primary">Job lists</a>
+        <a href="{% url 'customers:customer_list' %}" class="btn btn-primary">Customer lists</a>
         {% if form_name == "password_change" %}
         {% else %}
             <a href="{% url 'accounts:password_change' %}" class="btn btn-primary">パスワードの変更</a>

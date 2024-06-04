@@ -1,0 +1,33 @@
+<h1>顧客一覧</h1>
+
+<table class="table">
+    <tbody>
+        {% for job in job_list %}
+            <p><strong>Worker's First Name:</strong> {{ job.worker.first_name }}</p>
+            <p><strong>Worker's Last Name:</strong> {{ job.worker.last_name }}</p>
+            <p><strong>Customer's First Name:</strong> {{ job.customer.first_name }}</p>
+            <p><strong>Customer's Last Name:</strong> {{ job.customer.last_name }}</p>
+            <p><strong>Status:</strong> {{ job.status }}</p>
+            {% if job.status == 'NEW' %}
+                <p><a href="{% url 'jobs:receive_content' job.id %}">Received Video and Photos</a></p>
+            {% elif job.status == 'IN_PROGRESS' or job.status == 'IMPROVEMENT' %}
+                <!-- ここにformを作りたい、linkを入力されて、submitが押されたらstatusとlinkが更新される仕組みにしたい -->
+                <form action="{% url 'jobs:update_job_link' job.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="url" name="link" placeholder="Enter link">
+                    <button type="submit">Submit</button>
+                </form>
+            {% elif job.status == 'EVALUATION' %}
+                <p><strong>Video:</strong> <a href="{{ job.link }}" target="_blank">{{ job.link }}</p>
+                <p><a href="{% url 'jobs:approve_content' job.id %}">Mark as approved</a></p>
+                <p><a href="{% url 'jobs:complete_content' job.id %}">Mark as complete</a></p>
+            {% elif job.status == 'APPROVED' %}
+                <p><a href="{% url 'jobs:improve_content' job.id %}">Ask for improvement</a></p>
+                <p><a href="{% url 'jobs:complete_content' job.id %}">Mark as complete</a></p>
+            {% endif %}
+        {% endfor %}
+        {% if user.is_superuser %}
+            <p><a href="{% url 'jobs:assign_job' %}">Assign Job</a></p>
+        {% endif %}
+    </tbody>
+</table>
