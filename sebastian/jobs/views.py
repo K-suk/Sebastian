@@ -19,6 +19,9 @@ def assign_job_view(request):
     for worker in ready_workers:
         for slot in range(worker.shift_count):
             if cnt < len(customers):
+                worker.shift_assigned_done = 0
+                worker.shift_assigned += 1
+                worker.save()
                 job = Job(worker=worker, customer=customers[cnt], status='NEW')
                 job.save()
                 customers[cnt].task_assigned = True
@@ -62,6 +65,8 @@ def complete_contents_view(request, job_id):
     job = get_object_or_404(Job, id=job_id)
     user = User.objects.get(id=request.user.id)
     user.worker_credit += 5
+    user.shift_assigned -= 1
+    user.shift_assigned_done += 1
     user.save()
     salary_report, created = SalaryReport.objects.get_or_create(
         worker=request.user,

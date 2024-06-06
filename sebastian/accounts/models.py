@@ -77,6 +77,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         blank=False
     )
+    shift_assigned = models.IntegerField(
+        verbose_name=_("shift_assigned"),
+        default=0,
+        null=False,
+        blank=False
+    )
+    shift_assigned_done = models.IntegerField(
+        verbose_name=_("shift_assigned_done"),
+        default=0,
+        null=False,
+        blank=False
+    )
     worker_credit = models.IntegerField(
         verbose_name=_("worker_credit"),
         default=0,

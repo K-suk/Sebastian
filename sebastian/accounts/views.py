@@ -1,3 +1,5 @@
+import datetime
+import json
 from django.contrib.auth import login, authenticate
 from django.views.generic import TemplateView, CreateView, View
 from django.contrib.auth.views import (LoginView as BaseLoginView, LogoutView as BaseLogoutView,
@@ -9,15 +11,37 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 from jobs.models import Job
+from salary_reports.models import SalaryReport
 from .forms import LoginForm, ProfileForm
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import User
 
-class IndexView(TemplateView):
-    """ ホームビュー """
-    template_name = "index.html"
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        user_data = User.objects.get(id=request.user.id)
+        today = datetime.date.today()
+        salary_report, created = SalaryReport.objects.get_or_create(
+            worker=request.user,
+            year=today.year,
+            month=today.month,
+            defaults={'salary': 0, 'penalty': 0, 'job_amount': 0}
+        )
+        yearly_salary_report = list(SalaryReport.objects.filter(
+            worker=request.user,
+            year=today.year,
+        ).values('month', 'salary'))  # month と salary フィールドを取得
+        shifts_info = {
+            'shift_assigned': user_data.shift_assigned,
+            'shift_assigned_done': user_data.shift_assigned_done
+        }
+        return render(request, 'index.html', {
+            'user_data': user_data,
+            'salary_report': salary_report,
+            'yearly_salary_report': json.dumps(yearly_salary_report),
+            'shifts_info': json.dumps(shifts_info)
+        })
     
 # ログインビューを作成
 class LoginView(BaseLoginView):
