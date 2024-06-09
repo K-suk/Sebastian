@@ -51,16 +51,14 @@
                 <div class="sidebar-heading">User Information</div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{% url 'accounts:profile' %}" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
+                    <a class="nav-link" href="{% url 'accounts:profile' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         <span>プロフィール</span>
                     </a>
                 </li>
                 <!-- Nav Item - Utilities Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{% url 'accounts:logout' %}" data-toggle="collapse" data-target="#collapseUtilities"
-                        aria-expanded="true" aria-controls="collapseUtilities">
+                    <a class="nav-link" href="{% url 'accounts:logout' %}">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         <span>ログアウト</span>
                     </a>
@@ -71,8 +69,7 @@
                 <div class="sidebar-heading">Other Features</div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{% url 'jobs:job_list' %}" data-toggle="collapse" data-target="#collapsePages"
-                        aria-expanded="true" aria-controls="collapsePages">
+                    <a class="nav-link" href="{% url 'jobs:job_list' %}">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>仕事一覧</span>
                     </a>
@@ -84,6 +81,20 @@
                         <span>顧客一覧</span>
                     </a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'jobs:approve_wait_list' %}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>認証待ちリスト</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'jobs:assign_job' %}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>仕事割り当て</span>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
             <!-- End of Sidebar -->
 

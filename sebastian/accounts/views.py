@@ -18,7 +18,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import User
 
-class IndexView(View):
+class IndexView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         user_data = User.objects.get(id=request.user.id)
         today = datetime.date.today()
@@ -89,7 +89,7 @@ class PasswordResetComplete(PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
     
 
-class ProfileView(View):
+class ProfileView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         user_data = User.objects.get(id=request.user.id)
         
@@ -97,7 +97,7 @@ class ProfileView(View):
             'user_data': user_data,
         })
 
-class ProfileEditView(View):
+class ProfileEditView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         user_data = User.objects.get(id=request.user.id)
         form = ProfileForm(

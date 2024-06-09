@@ -17,6 +17,7 @@ class Job(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='NEW')
     link = models.URLField(blank=True)
+    due = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return f"Job for {self.customer.first_name} {self.customer.last_name} by {self.worker.first_name} {self.worker.last_name}"

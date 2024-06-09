@@ -22,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for job in job_list %}
+                            {% for job in approve_wait_list %}
                             <tr class="align-middle">
                                 <td>{{ job.worker.first_name }} {{ job.worker.last_name }}</td>
                                 <td>{{ job.customer.first_name }} {{ job.customer.last_name }}</td>
@@ -33,16 +33,12 @@
                                 {% endif %}
                                 <td>{{ job.status }}</td>
                                 <td>
-                                    {% if job.status == 'NEW' %}
-                                        <a href="{% url 'jobs:receive_content' job.id %}">Received Video and Photos</a>
-                                    {% elif job.status == 'IN_PROGRESS' or job.status == 'IMPROVEMENT' %}
-                                        <form action="{% url 'jobs:update_job_link' job.id %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="url" name="link" placeholder="Enter link">
-                                            <button type="submit">Submit</button>
-                                        </form>
-                                    {% elif job.status == 'EVALUATION' %}
-                                        <p><strong>Video:</strong> <a href="{{ job.link }}" target="_blank">{{ job.link }}</a></p>
+                                    {% if job.status == 'EVALUATION' %}
+                                        <td><strong>Video:</strong> <a href="{{ job.link }}" target="_blank">{{ job.link }}</a></td>
+                                        <td><a href="{% url 'jobs:approve_content' job.id %}" class="btn btn-primary mt-3">承認</a></td>
+                                    {% elif job.status == 'APPROVED' %}
+                                        <a href="{% url 'jobs:improve_content' job.id %}" class="btn btn-primary mt-3">修正依頼</a>
+                                        <a href="{% url 'jobs:complete_content' job.id %}" class="btn btn-success mt-3">完了済み</a>
                                     {% endif %}
                                 </td>
                             </tr>

@@ -15,31 +15,25 @@
                     <table class="table mb-0">
                         <thead class="small text-uppercase bg-body text-muted">
                             <tr>
-                                <th>顧客名</th>
-                                <th>Eメール</th>
-                                <th>コンタクト情報</th>
-                                <th>割り当て済み</th>
-                                <th>ステータス</th>
+                                <th>年月日</th>
+                                <th>給与</th>
+                                <th>完了件数</th>
+                                <th>ペナルティ数</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for customer in customer_list %}
+                            {% for report in report_list %}
                             <tr class="align-middle">
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div>
-                                            <div class="h6 mb-0 lh-1">{{ customer.first_name }} {{ customer.last_name }}</div>
+                                            <div class="h6 mb-0 lh-1">{{ report.year }}年{{ report.month }}月</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ customer.email }}</td>
-                                <td><span class="d-inline-block align-middle">{{ customer.contact_address }}</span></td>
-                                <td><span>{{ customer.task_assigned }}</span></td>
-                                {% if customer.task_completed %}
-                                    <td><span>完了済み</span></td>
-                                {% else %}
-                                    <td><span>進行中</span></td>
-                                {% endif %}
+                                <td>{{ report.salary }}円</td>
+                                <td><span class="d-inline-block align-middle">{{ report.job_amount }}件</span></td>
+                                <td><span>{{ report.penalty }}件</span></td>
                             </tr>
                             {% endfor %}
                         </tbody>
