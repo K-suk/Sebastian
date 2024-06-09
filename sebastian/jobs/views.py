@@ -28,10 +28,13 @@ class ApproveJobListView(LoginRequiredMixin, View):
 
 @login_required
 def assign_job_view(request):
-    ready_workers = list(User.objects.filter(ready=True))
-    customers = list(Customer.objects.filter(task_assigned=False))
+    ready_workers = list(User.objects.filter(ready=True).order_by('-worker_credit'))
+    today = timezone.now().date()
+    customers = list(Customer.objects.filter(task_assigned=False, due__lte=today))
     cnt = 0
     for worker in ready_workers:
+        worker.ready = False
+        worker.save()
         for slot in range(worker.shift_count):
             if cnt < len(customers):
                 worker.shift_assigned_done = 0
@@ -40,6 +43,7 @@ def assign_job_view(request):
                 job = Job(worker=worker, customer=customers[cnt], status='NEW')
                 job.save()
                 customers[cnt].task_assigned = True
+                customers[cnt].responsible_address = worker.contact_address
                 customers[cnt].save()
                 cnt += 1
             else:

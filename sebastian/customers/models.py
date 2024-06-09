@@ -8,6 +8,7 @@ class Customer(models.Model):
     task_completed = models.BooleanField(default=False)  # タスク完了フラグ
     task_assigned = models.BooleanField(default=False)  # タスク割り当てフラグ
     due = models.DateField()  # 期限日
+    responsible_address = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

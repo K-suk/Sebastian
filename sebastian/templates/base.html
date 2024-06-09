@@ -69,6 +69,12 @@
                 <div class="sidebar-heading">Other Features</div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:user_list' %}">
+                        <i class="fas fa-solid fa-user-nurse"></i>
+                        <span>従業員一覧</span>
+                    </a>
+                </li> 
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'jobs:job_list' %}">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>仕事一覧</span>
@@ -84,7 +90,7 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'jobs:approve_wait_list' %}">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                        <i class="fas fa-solid fa-hourglass-start"></i>
                         <span>認証待ちリスト</span>
                     </a>
                 </li>

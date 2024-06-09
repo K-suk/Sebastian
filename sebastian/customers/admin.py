@@ -3,6 +3,6 @@ from .models import Customer
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'contact_address', 'task_completed', 'task_assigned', 'due')
+    list_display = ('first_name', 'last_name', 'email', 'contact_address', 'task_completed', 'task_assigned', 'due', 'responsible_address')
     list_filter = ('task_completed', 'task_assigned', 'due')
-    search_fields = ('first_name', 'last_name', 'email')
+    search_fields = ('first_name', 'last_name', 'email', 'contact_address', 'responsible_address')

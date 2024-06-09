@@ -17,4 +17,5 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('profile/edit', views.ProfileEditView.as_view(), name='profile_edit'),
     path('make_ready/', views.make_ready_view, name='make_ready'),
+    path('user_list', views.UserListView.as_view(), name='user_list'),
 ]

@@ -9,6 +9,7 @@ from django.contrib.auth.views import (LoginView as BaseLoginView, LogoutView as
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.views import generic
 
 from jobs.models import Job
 from salary_reports.models import SalaryReport
@@ -129,6 +130,9 @@ class ProfileEditView(View, LoginRequiredMixin):
             'form': form
         })
         
+class UserListView(generic.ListView, LoginRequiredMixin):
+    model = User
+    
 @login_required
 def make_ready_view(request):
     if request.user.ready:

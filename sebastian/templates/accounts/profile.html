@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Full Name</p>
+                                <p class="mb-0">名前</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
@@ -19,7 +19,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
+                                <p class="mb-0">Eメール</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">{{ request.user.email }}</p>
@@ -28,7 +28,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Phone</p>
+                                <p class="mb-0">電話番号</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">{{ request.user.tel }}</p>
@@ -37,7 +37,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Address</p>
+                                <p class="mb-0">IGアドレス</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">{{ request.user.contact_address }}</p>
@@ -46,10 +46,19 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Slot</p>
+                                <p class="mb-0">シフト数</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">{{ request.user.shift_count }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">ポイント</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ request.user.worker_credit }}</p>
                             </div>
                         </div>
                         <hr>
