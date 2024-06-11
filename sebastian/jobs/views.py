@@ -26,8 +26,7 @@ class ApproveJobListView(LoginRequiredMixin, View):
             'approve_wait_list': approve_wait_list
         })
 
-@login_required
-def assign_job_view(request):
+def assign_jobs():
     ready_workers = list(User.objects.filter(ready=True).order_by('-worker_credit'))
     today = timezone.now().date()
     customers = list(Customer.objects.filter(task_assigned=False, due__lte=today))
@@ -48,6 +47,10 @@ def assign_job_view(request):
                 cnt += 1
             else:
                 break
+
+@login_required
+def assign_job_view(request):
+    assign_jobs()
     return redirect('jobs:job_list')
 
 @login_required
