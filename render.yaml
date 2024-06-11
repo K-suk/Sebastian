@@ -2,14 +2,14 @@ databases:
   - name: sebastian_render_db
     databaseName: sebastian_render_db
     user: sebastian_admin
-    region: singapore
+    region: Singapore
     plan: free
 
 services:
   - type: web
     name: sebastian
     env: python
-    region: singapore
+    region: Singapore
     plan: free
     branch: main
     healthCheckPath: /
