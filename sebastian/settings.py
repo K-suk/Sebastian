@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1','sebastian.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1','sebastian-ie9d.onrender.com']
 
 
 # Application definition
@@ -89,7 +89,11 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
-DATABASES = {'default': dj_database_url.config(default=default_dburl)}
+DATABASES = {
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL')
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -150,7 +154,6 @@ SECURE_SSL_REDIRECT = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-PORT = os.getenv('PORT', 8000)
 
 SUPERUSER_ACCOUNT_ID = os.getenv('SUPERUSER_ACCOUNT_ID')
 SUPERUSER_EMAIL = os.getenv('SUPERUSER_EMAIL')
