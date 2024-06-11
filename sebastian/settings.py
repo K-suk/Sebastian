@@ -30,7 +30,7 @@ env.read_env(os.path.join(BASE_DIR,'.env'))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','sebastian-ie9d.onrender.com']
 
