@@ -10,18 +10,22 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views import generic
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 from jobs.models import Job
 from salary_reports.models import SalaryReport
 from .forms import LoginForm, ProfileForm
-from django.views import View
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from .models import User
 
-class IndexView(View, LoginRequiredMixin):
+class IndexView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        user_data = User.objects.get(id=request.user.id)
+        try:
+            user_data = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return render(request, 'error.html', {'error': 'User does not exist'})
+
         today = datetime.date.today()
         salary_report, created = SalaryReport.objects.get_or_create(
             worker=request.user,
@@ -43,15 +47,14 @@ class IndexView(View, LoginRequiredMixin):
             'yearly_salary_report': json.dumps(yearly_salary_report),
             'shifts_info': json.dumps(shifts_info)
         })
-    
-# ログインビューを作成
+
 class LoginView(BaseLoginView):
     form_class = LoginForm
     template_name = "accounts/login.html"
-    
+
 class LogoutView(BaseLogoutView):
     success_url = reverse_lazy("accounts:index")
-    
+
 class PasswordChange(LoginRequiredMixin, PasswordChangeView):
     """パスワード変更ビュー"""
     success_url = reverse_lazy('accounts:password_change_done')
@@ -65,7 +68,7 @@ class PasswordChange(LoginRequiredMixin, PasswordChangeView):
 class PasswordChangeDone(LoginRequiredMixin,PasswordChangeDoneView):
     """パスワード変更完了"""
     template_name = 'accounts/password_change_done.html'
-    
+
 class PasswordReset(PasswordResetView):
     """パスワード変更用URLの送付ページ"""
     subject_template_name = 'accounts/mail_template/reset/subject.txt'
@@ -73,34 +76,37 @@ class PasswordReset(PasswordResetView):
     template_name = 'accounts/password_reset_form.html'
     success_url = reverse_lazy('accounts:password_reset_done')
 
-
 class PasswordResetDone(PasswordResetDoneView):
     """パスワード変更用URLを送りましたページ"""
     template_name = 'accounts/password_reset_done.html'
-
 
 class PasswordResetConfirm(PasswordResetConfirmView):
     """新パスワード入力ページ"""
     success_url = reverse_lazy('accounts:password_reset_complete')
     template_name = 'accounts/password_reset_confirm.html'
 
-
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'accounts/password_reset_complete.html'
-    
 
-class ProfileView(View, LoginRequiredMixin):
+class ProfileView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        user_data = User.objects.get(id=request.user.id)
-        
+        try:
+            user_data = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return render(request, 'error.html', {'error': 'User does not exist'})
+
         return render(request, 'accounts/profile.html', {
             'user_data': user_data,
         })
 
-class ProfileEditView(View, LoginRequiredMixin):
+class ProfileEditView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        user_data = User.objects.get(id=request.user.id)
+        try:
+            user_data = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return render(request, 'error.html', {'error': 'User does not exist'})
+
         form = ProfileForm(
             initial={
                 'first_name': user_data.first_name,
@@ -110,13 +116,16 @@ class ProfileEditView(View, LoginRequiredMixin):
                 'shift_count': user_data.shift_count
             }
         )
-        
         return render(request, 'accounts/profile_edit.html', {
             'form': form
         })
-        
+
     def post(self, request, *args, **kwargs):
-        user_data = User.objects.get(id=request.user.id)
+        try:
+            user_data = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return render(request, 'error.html', {'error': 'User does not exist'})
+
         form = ProfileForm(request.POST)
         if form.is_valid():
             user_data.first_name = form.cleaned_data['first_name']
@@ -129,10 +138,10 @@ class ProfileEditView(View, LoginRequiredMixin):
         return render(request, 'accounts/profile_edit.html', {
             'form': form
         })
-        
-class UserListView(generic.ListView, LoginRequiredMixin):
+
+class UserListView(LoginRequiredMixin, generic.ListView):
     model = User
-    
+
 @login_required
 def make_ready_view(request):
     if request.user.ready:
