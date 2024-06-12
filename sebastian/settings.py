@@ -153,6 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # カスタムユーザーモデルの設定
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'accounts:index'
 LOGOUT_REDIRECT_URL = 'accounts:login'
 
