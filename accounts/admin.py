@@ -11,7 +11,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('account_id', 'email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'tel', 'contact_address', 'shift_count', 'shift_assigned', 'shift_assigned_done', 'worker_credit', 'ready')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login',)}),  # 'created_at' を除外
+        ('Important dates', {'fields': ('last_login',)}),
     )
     add_fieldsets = (
         (None, {
@@ -19,10 +19,10 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('account_id', 'email', 'first_name', 'last_name', 'tel', 'contact_address', 'shift_count', 'shift_assigned', 'shift_assigned_done', 'worker_credit', 'ready', 'password1', 'password2'),
         }),
     )
-    readonly_fields = ('created_at', 'updated_at')  # これを追加
+    readonly_fields = ('created_at', 'updated_at')
     search_fields = ('account_id', 'email', 'first_name', 'last_name')
     ordering = ('account_id',)
     filter_horizontal = ('groups', 'user_permissions',)
 
-admin.site.register(User, UserAdmin)  # Userモデルを登録
-admin.site.unregister(Group)  # Groupモデルは不要のため非表示にします
+admin.site.register(User, UserAdmin)
+admin.site.unregister(Group)

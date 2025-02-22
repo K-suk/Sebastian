@@ -1,13 +1,13 @@
 from django.db import models
 
 class Customer(models.Model):
-    email = models.EmailField(unique=True)  # 顧客のメールアドレス
-    first_name = models.CharField(max_length=30)  # 顧客の名
-    last_name = models.CharField(max_length=30)  # 顧客の姓
-    contact_address = models.CharField(max_length=255)  # 連絡先住所
-    task_completed = models.BooleanField(default=False)  # タスク完了フラグ
-    task_assigned = models.BooleanField(default=False)  # タスク割り当てフラグ
-    due = models.DateField()  # 期限日
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    contact_address = models.CharField(max_length=255)
+    task_completed = models.BooleanField(default=False)
+    task_assigned = models.BooleanField(default=False)
+    due = models.DateField()
     responsible_address = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):

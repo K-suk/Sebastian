@@ -9,7 +9,6 @@ import datetime
 class AssignJobViewTest(TestCase):
 
     def setUp(self):
-        # ユーザーのセットアップ
         self.user1 = User.objects.create_user(
             email='user1@example.com',
             account_id='user1',
@@ -47,10 +46,8 @@ class AssignJobViewTest(TestCase):
             ready=True
         )
 
-        # 今日の日付
         today = timezone.now().date()
 
-        # カスタマーのセットアップ
         self.customer1 = Customer.objects.create(
             email='customer1@example.com',
             first_name='Customer1',
@@ -58,10 +55,9 @@ class AssignJobViewTest(TestCase):
             contact_address='Customer Address1',
             task_completed=False,
             task_assigned=False,
-            due=today - datetime.timedelta(days=1)  # 昨日
+            due=today - datetime.timedelta(days=1)
         )
 
-        # カスタマー2 - 期限日が今日
         self.customer2 = Customer.objects.create(
             email='customer2@example.com',
             first_name='Customer2',
@@ -69,10 +65,9 @@ class AssignJobViewTest(TestCase):
             contact_address='Customer Address2',
             task_completed=False,
             task_assigned=False,
-            due=today  # 今日
+            due=today
         )
 
-        # カスタマー3 - 期限日が今日より後
         self.customer3 = Customer.objects.create(
             email='customer3@example.com',
             first_name='Customer3',
@@ -86,7 +81,6 @@ class AssignJobViewTest(TestCase):
     def test_list_check(self):
         ready_workers = list(User.objects.filter(ready=True).order_by('-worker_credit'))
         
-        # テスト内容
         self.assertEqual(len(ready_workers), 3)
         self.assertEqual(ready_workers[0].account_id, 'user2')
         self.assertEqual(ready_workers[1].account_id, 'user3')
@@ -96,8 +90,7 @@ class AssignJobViewTest(TestCase):
         today = timezone.now().date()
         customers = list(Customer.objects.filter(task_assigned=False, due__lte=today))
 
-        # テスト内容
-        self.assertEqual(len(customers), 2)  # 期限日が今日以下のカスタマーは2つ
+        self.assertEqual(len(customers), 2)
         self.assertIn(self.customer1, customers)
         self.assertIn(self.customer2, customers)
         self.assertNotIn(self.customer3, customers)

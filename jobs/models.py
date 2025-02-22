@@ -1,8 +1,6 @@
-# job_management/models.py
 from django.db import models
 from django.conf import settings
-from customers.models import Customer  # Customerモデルがあるアプリケーションからインポート
-
+from customers.models import Customer
 class Job(models.Model):
     STATUS_CHOICES = [
         ('NEW', 'New'),

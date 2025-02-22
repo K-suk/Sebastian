@@ -36,7 +36,7 @@ class IndexView(LoginRequiredMixin, View):
         yearly_salary_report = list(SalaryReport.objects.filter(
             worker=request.user,
             year=today.year,
-        ).values('month', 'salary'))  # month と salary フィールドを取得
+        ).values('month', 'salary'))
         shifts_info = {
             'shift_assigned': user_data.shift_assigned,
             'shift_assigned_done': user_data.shift_assigned_done
@@ -56,37 +56,31 @@ class LogoutView(BaseLogoutView):
     success_url = reverse_lazy("accounts:index")
 
 class PasswordChange(LoginRequiredMixin, PasswordChangeView):
-    """パスワード変更ビュー"""
     success_url = reverse_lazy('accounts:password_change_done')
     template_name = 'accounts/password_change.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs) # 継承元のメソッドCALL
+        context = super().get_context_data(**kwargs)
         context["form_name"] = "password_change"
         return context
 
 class PasswordChangeDone(LoginRequiredMixin,PasswordChangeDoneView):
-    """パスワード変更完了"""
     template_name = 'accounts/password_change_done.html'
 
 class PasswordReset(PasswordResetView):
-    """パスワード変更用URLの送付ページ"""
     subject_template_name = 'accounts/mail_template/reset/subject.txt'
     email_template_name = 'accounts/mail_template/reset/message.txt'
     template_name = 'accounts/password_reset_form.html'
     success_url = reverse_lazy('accounts:password_reset_done')
 
 class PasswordResetDone(PasswordResetDoneView):
-    """パスワード変更用URLを送りましたページ"""
     template_name = 'accounts/password_reset_done.html'
 
 class PasswordResetConfirm(PasswordResetConfirmView):
-    """新パスワード入力ページ"""
     success_url = reverse_lazy('accounts:password_reset_complete')
     template_name = 'accounts/password_reset_confirm.html'
 
 class PasswordResetComplete(PasswordResetCompleteView):
-    """新パスワード設定しましたページ"""
     template_name = 'accounts/password_reset_complete.html'
 
 class ProfileView(LoginRequiredMixin, View):
@@ -133,7 +127,7 @@ class ProfileEditView(LoginRequiredMixin, View):
             user_data.tel = form.cleaned_data['tel']
             user_data.contact_address = form.cleaned_data['contact_address']
             user_data.shift_count = form.cleaned_data['shift_count']
-            user_data.save()  # ここでユーザー情報を保存する
+            user_data.save()
             return redirect('accounts:profile')
         return render(request, 'accounts/profile_edit.html', {
             'form': form
